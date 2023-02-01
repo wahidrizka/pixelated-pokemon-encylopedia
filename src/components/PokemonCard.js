@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import styled from "@emotion/styled";
 import { Text } from ".";
 import { colors } from "../libs/utils";
+
+import PokeAPI from "pokedex-promise-v2";
+const P = new PokeAPI();
 
 const getStyle = () => {
   return `
@@ -12,17 +15,20 @@ const getStyle = () => {
   `;
 };
 
-const PixelatedPokemonCard = styled("div")(getStyle());
+const PixelatedPokemonCard = styled("div")((props) => getStyle(props));
 
-const PokemonCard = ({ name, sprite, children }) => {
+const PokemonCard = ({ id, name, sprite, children }) => {
   return (
     <PixelatedPokemonCard className="pxl-border">
+      <Text size="lg">#{id}</Text>
       {sprite && (
         <>
           <LazyLoadImage src={sprite} alt={name} width={96} />
         </>
       )}
-      <Text>{name}</Text>
+      <Text variant="outlined" size="lg">
+        {name}
+      </Text>
       {children}
     </PixelatedPokemonCard>
   );

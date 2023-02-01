@@ -5,7 +5,7 @@ const getPokemons = async (page) => {
   const offset = 15 * (page - 1);
   const data = await P.getPokemonsList({ limit: 15, offset: offset });
   const promises = data.results.map(async (pokemon) => {
-    return await P.getResource(pokemon.url);
+    return await P.getPokemonByName(pokemon.name);
   });
 
   const results = await Promise.all(promises);
