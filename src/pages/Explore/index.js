@@ -13,60 +13,91 @@ import * as T from "./index.style";
 import getPokemons from "../../api/getPokemons";
 
 import PokeAPI from "pokedex-promise-v2";
+import getPokemonByName from "../../api/getPokemonByName";
 const P = new PokeAPI();
 
 const Explore = () => {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
-  async function loadPokemons() {
+  const pokemonsPerPage = 10;
+
+  const loadPokemons = async () => {
     try {
       setLoading(true);
-      setPokemons(await getPokemons(1));
+      const data = await getPokemons(pokemonsPerPage, pokemonsPerPage * page);
+      const results = await getPokemonByName(data);
+      setPokemons(results);
       setLoading(false);
+      setTotalPages(Math.ceil(data.count / pokemonsPerPage));
+      console.log(data.count);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const leftClickHandler = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const rightClickHandler = () => {
+    if (page + 1 !== totalPages) {
+      setPage(page + 1);
+    }
+  };
 
   useEffect(() => {
     loadPokemons();
-  }, []);
+  }, [page]);
 
   return (
     <>
-      <T.Container style={{}}>
-        <Text as="h1" variant="outlined" size="xl">
-          POKÉMON ENCYCLOPEDIA
-        </Text>
-        <T.Grid>
-          {pokemons.map((pokemon) => (
-            <T.WrapperCardList key={pokemon.name}>
-              <PokemonCard
-                id={pokemon.order}
-                name={pokemon.name}
-                // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                sprite={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon.name}.gif`}
-              >
-                <T.TypeContainer>
-                  {pokemon.types.map((type, index) => (
-                    <TypeBadge key={index} type={type.type.name} />
-                  ))}
-                </T.TypeContainer>
-              </PokemonCard>
-            </T.WrapperCardList>
-          ))}
-        </T.Grid>
-        {!loading ? (
-          pokemons && (
-            <>
-              <h1>Pagination ini ntar</h1>
-            </>
-          )
-        ) : (
-          <Loading label="Please wait..." />
-        )}
-      </T.Container>
+      {!loading ? (
+        pokemons && (
+          <T.Container>
+            <Text variant="outlined" size="lg">
+              POKÉMON ENCYCLOPEDIA
+            </Text>
+            <T.Pagination>
+              <Button variant="dark" size="sm" onClick={leftClickHandler}>
+                ◀
+              </Button>
+              <div style={{ marginTop: "0.7rem" }}>
+                <Text variant="gray" outlined size="lg">
+                  {page + 1} / {totalPages}
+                </Text>
+              </div>
+              <Button variant="dark" size="sm" onClick={rightClickHandler}>
+                ▶
+              </Button>
+            </T.Pagination>
+            <T.Grid>
+              {pokemons.map((pokemon) => (
+                <T.WrapperCardList key={pokemon.name}>
+                  <PokemonCard
+                    id={pokemon.order}
+                    name={pokemon.name}
+                    // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                    sprite={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon.name}.gif`}
+                  >
+                    <T.TypeContainer>
+                      {pokemon.types.map((type, index) => (
+                        <TypeBadge key={index} type={type.type.name} />
+                      ))}
+                    </T.TypeContainer>
+                  </PokemonCard>
+                </T.WrapperCardList>
+              ))}
+            </T.Grid>
+          </T.Container>
+        )
+      ) : (
+        <Loading label="Please wait..." />
+      )}
     </>
   );
 };

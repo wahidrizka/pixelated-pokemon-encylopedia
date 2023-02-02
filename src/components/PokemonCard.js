@@ -6,8 +6,8 @@ import { Text } from ".";
 const getStyle = () => {
   return `
   img {
-    
     margin: 0.3rem auto;
+    height: 70px;
   }
   `;
 };
@@ -25,7 +25,6 @@ const PokemonCard = ({ id, name, sprite, children }) => {
           <LazyLoadImage
             src={sprite}
             alt={name}
-            height={70}
             placeholderSrc="/static/pokemon-placeholder.png"
             onError={(event) =>
               (event.target.src = "static/pokemon-placeholder.png")

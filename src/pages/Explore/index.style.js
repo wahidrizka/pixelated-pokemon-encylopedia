@@ -16,9 +16,9 @@ export const Grid = styled("div")({
   display: "grid",
   gap: "16px",
   margin: "16px 0",
-  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  gridTemplateColumns: "repeat(1, minmax(0, 1fr))",
   "@media (min-width: 640px)": {
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
   },
   "@media (min-width: 1024px)": {
     gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
@@ -42,7 +42,11 @@ export const TypeContainer = styled("div")({
   marginBottom: "0.5rem",
 });
 
-export const Footer = styled("footer")({
+export const Pagination = styled("div")({
   display: "flex",
-  paddingTop: 24,
+  justifyContent: "space-between",
+  gap: "1em",
+  Button: {
+    maxWidth: "3rem",
+  },
 });
