@@ -57,6 +57,15 @@ const Explore = () => {
             </T.WrapperCardList>
           ))}
         </T.Grid>
+        {!loading ? (
+          pokemons && (
+            <>
+              <h1>Pagination ini ntar</h1>
+            </>
+          )
+        ) : (
+          <Loading label="Please wait..." />
+        )}
       </T.Container>
     </>
   );
