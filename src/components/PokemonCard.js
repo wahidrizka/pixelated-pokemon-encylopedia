@@ -5,10 +5,10 @@ import { Text } from ".";
 
 const getStyle = () => {
   return `
-  img {
-    margin: 0.3rem auto;
-    height: 60px;
-  }
+    height: 265px;
+    img {
+      width: 128px;
+    }
   `;
 };
 
@@ -17,9 +17,11 @@ const PixelatedPokemonCard = styled("div")((props) => getStyle(props));
 const PokemonCard = ({ id, name, sprite, children }) => {
   return (
     <PixelatedPokemonCard className="pxl-border">
-      <Text size="lg" variant="gray">
-        #{id}
-      </Text>
+      {id && (
+        <Text size="lg" variant="gray">
+          #{id}
+        </Text>
+      )}
       {sprite && (
         <>
           <LazyLoadImage

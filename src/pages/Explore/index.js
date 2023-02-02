@@ -82,7 +82,7 @@ const Explore = () => {
                     id={pokemon.order}
                     name={pokemon.name}
                     // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                    sprite={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon.name}.gif`}
+                    sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
                   >
                     <T.TypeContainer>
                       {pokemon.types.map((type, index) => (
