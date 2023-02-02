@@ -18,6 +18,13 @@ const getStyle = ({ variant = "default", size = "base", as = "p" }) => {
         textShadow: textShadow[`light-${size}`],
         fontSize: units.fontSize[size]
       }
+    case "gray":
+      return {
+        as,
+        color: colors["gray-200"],
+        textShadow: textShadow[`light-${size}`],
+        fontSize: units.fontSize[size]
+      }
     case "error":
       return {
         as,

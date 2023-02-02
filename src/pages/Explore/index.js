@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { Text, Button, Loading, PokemonCard } from "../../components";
+import {
+  Text,
+  Button,
+  Loading,
+  PokemonCard,
+  TypeBadge,
+} from "../../components";
 
 import * as T from "./index.style";
 import getPokemons from "../../api/getPokemons";
@@ -12,7 +18,6 @@ const P = new PokeAPI();
 const Explore = () => {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [types, setTypes] = useState([]);
 
   async function loadPokemons() {
     try {
@@ -32,26 +37,25 @@ const Explore = () => {
     <>
       <T.Container style={{}}>
         <Text as="h1" variant="outlined" size="xl">
-          POKÉMON ENCYCLOPEDI
+          POKÉMON ENCYCLOPEDIA
         </Text>
         <T.Grid>
-          {pokemons.length &&
-            pokemons.map((pokemon) => (
-              <T.WrapperCardList key={pokemon.name}>
-                <PokemonCard
-                  id={pokemon.order}
-                  name={pokemon.name}
-                  types={types}
-                  sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                >
+          {pokemons.map((pokemon) => (
+            <T.WrapperCardList key={pokemon.name}>
+              <PokemonCard
+                id={pokemon.order}
+                name={pokemon.name}
+                // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                sprite={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon.name}.gif`}
+              >
+                <T.TypeContainer>
                   {pokemon.types.map((type, index) => (
-                    <div key={index}>
-                      <Text variant="outlined">{type.type.name}</Text>
-                    </div>
+                    <TypeBadge key={index} type={type.type.name} />
                   ))}
-                </PokemonCard>
-              </T.WrapperCardList>
-            ))}
+                </T.TypeContainer>
+              </PokemonCard>
+            </T.WrapperCardList>
+          ))}
         </T.Grid>
       </T.Container>
     </>

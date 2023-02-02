@@ -31,7 +31,15 @@ export const Grid = styled("div")({
 export const WrapperCardList = styled("div")({
   display: "flex",
   alignItems: "center",
-  gap: 8,
+  gap: 7,
+});
+
+export const TypeContainer = styled("div")({
+  display: "flex",
+  gap: "1rem",
+  justifyContent: "center",
+  marginTop: "0.5rem",
+  marginBottom: "0.5rem",
 });
 
 export const Footer = styled("footer")({
