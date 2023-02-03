@@ -5,7 +5,7 @@ import { Text } from ".";
 
 const getStyle = () => {
   return `
-    height: 265px;
+    height: 300px;
     img {
       width: 128px;
     }

@@ -7,20 +7,19 @@ import {
   Loading,
   PokemonCard,
   TypeBadge,
+  InfoButton,
 } from "../../components";
 
 import * as T from "./index.style";
-import getPokemons from "../../api/getPokemons";
-
-import PokeAPI from "pokedex-promise-v2";
-import getPokemonByName from "../../api/getPokemonByName";
-const P = new PokeAPI();
+import { getPokemons, getPokemonByName } from "../../api";
 
 const Explore = () => {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [selectedPokemon, setSelectedPokemon] = useState([]);
+  const [pokemonInfo, setPokemonInfo] = useState(false);
 
   const pokemonsPerPage = 10;
 
@@ -79,7 +78,6 @@ const Explore = () => {
               {pokemons.map((pokemon) => (
                 <T.WrapperCardList key={pokemon.name}>
                   <PokemonCard
-                    id={pokemon.order}
                     name={pokemon.name}
                     // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
                     sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
@@ -89,6 +87,12 @@ const Explore = () => {
                         <TypeBadge key={index} type={type.type.name} />
                       ))}
                     </T.TypeContainer>
+                    <InfoButton
+                      onClick={() => {
+                        setSelectedPokemon(pokemons);
+                        setPokemonInfo(true);
+                      }}
+                    />
                   </PokemonCard>
                 </T.WrapperCardList>
               ))}
