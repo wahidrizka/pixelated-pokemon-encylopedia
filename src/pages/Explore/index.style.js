@@ -50,3 +50,23 @@ export const Pagination = styled("div")({
     maxWidth: "3rem",
   },
 });
+
+export const PokemonInfoModal = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "12px",
+  padding: "0 16px",
+  "div:first-child": {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  "div:last-child": {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1rem",
+  },
+});

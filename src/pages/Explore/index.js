@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import {
   Text,
@@ -8,6 +8,7 @@ import {
   PokemonCard,
   TypeBadge,
   InfoButton,
+  Modal,
 } from "../../components";
 
 import * as T from "./index.style";
@@ -19,7 +20,7 @@ const Explore = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedPokemon, setSelectedPokemon] = useState([]);
-  const [pokemonInfo, setPokemonInfo] = useState(false);
+  const [pokemonModal, setPokemonModal] = useState(false);
 
   const pokemonsPerPage = 10;
 
@@ -31,7 +32,6 @@ const Explore = () => {
       setPokemons(results);
       setLoading(false);
       setTotalPages(Math.ceil(data.count / pokemonsPerPage));
-      console.log(data.count);
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +55,26 @@ const Explore = () => {
 
   return (
     <>
+      <Modal open={pokemonModal} overlay="light">
+        <T.PokemonInfoModal>
+          <div className="pxl-border">
+            <Text size="xl" variant="gray">
+              #{selectedPokemon.order}
+            </Text>
+            <Text size="xl" variant="outlined">
+              {selectedPokemon.name}
+            </Text>
+            <LazyLoadImage
+              src={`https://img.pokemondb.net/sprites/go/normal/${selectedPokemon.name}.png`}
+              alt={selectedPokemon.name}
+              height={256}
+            />
+          </div>
+          <div>
+            <Button onClick={() => setPokemonModal(false)}>Back</Button>
+          </div>
+        </T.PokemonInfoModal>
+      </Modal>
       {!loading ? (
         pokemons && (
           <T.Container>
@@ -76,25 +96,29 @@ const Explore = () => {
             </T.Pagination>
             <T.Grid>
               {pokemons.map((pokemon) => (
-                <T.WrapperCardList key={pokemon.name}>
-                  <PokemonCard
-                    name={pokemon.name}
-                    // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                    sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                  >
-                    <T.TypeContainer>
-                      {pokemon.types.map((type, index) => (
-                        <TypeBadge key={index} type={type.type.name} />
-                      ))}
-                    </T.TypeContainer>
-                    <InfoButton
-                      onClick={() => {
-                        setSelectedPokemon(pokemons);
-                        setPokemonInfo(true);
-                      }}
-                    />
-                  </PokemonCard>
-                </T.WrapperCardList>
+                <>
+                  <T.WrapperCardList key={pokemons.name}>
+                    <PokemonCard
+                      name={pokemon.name}
+                      // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                      sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                    >
+                      <T.TypeContainer>
+                        {pokemon.types.map((type, index) => (
+                          <TypeBadge key={index} type={type.type.name} />
+                        ))}
+                      </T.TypeContainer>
+                      <InfoButton
+                        key={pokemon.order}
+                        onClick={() => {
+                          setSelectedPokemon(pokemon);
+                          setPokemonModal(true);
+                          console.log(pokemon);
+                        }}
+                      />
+                    </PokemonCard>
+                  </T.WrapperCardList>
+                </>
               ))}
             </T.Grid>
           </T.Container>
