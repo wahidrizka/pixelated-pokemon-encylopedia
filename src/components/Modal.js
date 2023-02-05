@@ -26,22 +26,13 @@ const Content = styled("div")(({ open = false }) => ({
   width: "100vw",
   height: "100vh",
   zIndex: open ? 50 : 0,
-  "> div": {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-  },
 }));
 
 const Modal = ({ children, open, overlay = "dark", solid }) => {
   return open ? (
     <>
       <Overlay open={open} overlay={overlay} solid={solid} />
-      <Content open={open}>
-        <div>{children}</div>
-      </Content>
+      <Content open={open}>{children}</Content>
     </>
   ) : null;
 };

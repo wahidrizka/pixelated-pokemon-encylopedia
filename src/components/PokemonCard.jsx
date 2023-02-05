@@ -7,7 +7,7 @@ const getStyle = () => {
   return `
     height: 300px;
     img {
-      width: 128px;
+      width: 120px;
     }
   `;
 };

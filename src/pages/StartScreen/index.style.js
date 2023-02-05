@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled("section")({
-  backgroundImage: "url('/static/pokemon-group.png')",
+  // backgroundImage: "url('/static/pokemon-group.png')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   minWidth: "100vw",

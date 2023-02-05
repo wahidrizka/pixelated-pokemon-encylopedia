@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { units } from "../../libs/utils";
+import { colors, units } from "../../libs/utils";
 
 export const Container = styled("section")({
   maxWidth: `${units.screenSize["xl"]}`,
@@ -52,21 +52,48 @@ export const Pagination = styled("div")({
 });
 
 export const PokemonInfoModal = styled("div")({
+  margin: "auto",
   display: "flex",
   flexDirection: "column",
-  gap: "12px",
-  padding: "0 16px",
-  "div:first-child": {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  "div:last-child": {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "1rem",
-  },
+  justifyContent: "center",
+  alignContent: "center",
+  alignItems: "center",
+});
+
+export const InfoName = styled("div")({
+  paddingBottom: "3px",
+  textTransform: "uppercase",
+});
+
+export const InfoImage = styled("div")({
+  textTransform: "capitalize",
+  position: "absolute",
+  top: "30px",
+});
+
+export const InfoType = styled("div")({
+  gap: "1rem",
+  marginTop: "0.3rem",
+  display: "flex",
+  flexDirection: "row",
+});
+
+export const InfoDescription = styled("div")({
+  paddingBottom: "3px",
+  textAlign: "justify",
+});
+
+export const InfoWeightHeight = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  gap: "1rem",
+});
+
+export const InfoStats = styled("div")({
+  gap: "1rem",
+});
+
+export const InfoBackButton = styled("div")({
+  justifyItems: "center",
+  justifyContent: "center",
 });
