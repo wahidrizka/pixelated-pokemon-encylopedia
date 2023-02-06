@@ -97,3 +97,12 @@ export const skillColor = {
   "fairy-200": "#F0B6BC",
   "fairy-300": "#D87881",
 };
+
+export const statsColor = {
+  "hp-100": "#92E469",
+  "attack-100": "#E9625A",
+  "defense-100": "#98B6FF",
+  "special-attack-100": "#F85888",
+  "special-defense-100": "#B8A0F8",
+  "speed-100": "#F8E084",
+};

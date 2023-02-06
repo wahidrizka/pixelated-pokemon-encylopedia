@@ -9,11 +9,12 @@ import {
   TypeBadge,
   InfoButton,
   Modal,
+  Progress,
 } from "../../components";
 
 import { colors } from "../../libs/utils";
 import * as T from "./index.style";
-import { getPokemons, getPokemonByName } from "../../api";
+import { getPokemons, getPokemonByName, getPokemonGeneration } from "../../api";
 
 import PokeAPI from "pokedex-promise-v2";
 const P = new PokeAPI();
@@ -71,15 +72,6 @@ const Explore = () => {
     }
   };
 
-  const getPokemonGeneration = async (pokemonGeneration) => {
-    try {
-      const generation = await P.getGenerationByName(pokemonGeneration);
-      return generation;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     loadPokemons();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,7 +93,7 @@ const Explore = () => {
             <LazyLoadImage
               className="image"
               src={`https://img.pokemondb.net/sprites/go/normal/${selectedPokemon.name}.png`}
-              width={256}
+              width={220}
               alt={selectedPokemon.name}
             />
             <Text
@@ -116,16 +108,13 @@ const Explore = () => {
             <Text variant="outlined">
               Region of Origin: "{pokemonGeneration.main_region?.name}"
             </Text>
-            <Text variant="outlined">Pokemon Type:</Text>
+            <Text variant="outlined">Type:</Text>
             <T.InfoType>
               {selectedPokemon.types?.map((types, index) => (
                 <TypeBadge key={index} type={types.type.name} />
               ))}
             </T.InfoType>
             <T.InfoDescription>
-              <Text variant="outlined">
-                Habitat: {pokemonSpecies.habitat?.name.replace("-", " ")}
-              </Text>
               <T.InfoWeightHeight>
                 <Text variant="outlined">
                   Height: {selectedPokemon.height / 10}m
@@ -136,20 +125,13 @@ const Explore = () => {
               </T.InfoWeightHeight>
               <T.InfoStats>
                 {selectedPokemon.stats?.map((stats, index) => (
-                  <div key={index} style={{ marginTop: "5px" }}>
-                    <label for="stats">
-                      {stats.stat.name
-                        .replace("-", " ")
-                        .replace("special", "sp")}
-                      :
-                    </label>
-                    <progress
-                      style={{ backgroundColor: `${colors["sky-200"]}` }}
-                      id="stats"
-                      value={stats.base_stat}
-                      max="100"
-                    ></progress>
-                  </div>
+                  <Progress
+                    statName={stats.stat.name
+                      .replace("-", " ")
+                      .replace("special", "sp")}
+                    stats={stats.stat.name}
+                    baseStat={stats.base_stat}
+                  />
                 ))}
               </T.InfoStats>
             </T.InfoDescription>

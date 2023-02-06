@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
 
 import { Text } from ".";
-import { colors } from "../libs/utils";
-
-const spin = keyframes`
-  from { transform: rotate(0deg) }
-  to { transform: rotate(360deg) }
-`;
 
 const StyledLoading = styled("div")({
   display: "flex",

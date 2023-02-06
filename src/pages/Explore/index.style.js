@@ -73,7 +73,6 @@ export const InfoImage = styled("div")({
 
 export const InfoType = styled("div")({
   gap: "1rem",
-  marginTop: "0.3rem",
   display: "flex",
   flexDirection: "row",
 });
@@ -94,6 +93,5 @@ export const InfoStats = styled("div")({
 });
 
 export const InfoBackButton = styled("div")({
-  justifyItems: "center",
-  justifyContent: "center",
+  display: "flex",
 });
