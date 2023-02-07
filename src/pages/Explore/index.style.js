@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors, units } from "../../libs/utils";
+import { units } from "../../libs/utils";
 
 export const Container = styled("section")({
   maxWidth: `${units.screenSize["xl"]}`,
@@ -30,7 +30,9 @@ export const Grid = styled("div")({
 
 export const WrapperCardList = styled("div")({
   display: "flex",
+  flexDirection: "row",
   alignItems: "center",
+  flexWrap: "wrap",
   gap: 7,
 });
 
@@ -43,12 +45,24 @@ export const TypeContainer = styled("div")({
 });
 
 export const Pagination = styled("div")({
+  marginTop: "1rem",
   display: "flex",
   justifyContent: "space-between",
   gap: "1em",
   Button: {
     maxWidth: "3rem",
   },
+});
+
+export const SearchSection = styled("div")({
+  display: "flex",
+  gap: "0.1rem",
+});
+
+export const SearchPokemon = styled("form")({
+  display: "flex",
+  gap: "0.1rem",
+  width: "20rem",
 });
 
 export const PokemonInfoModal = styled("div")({

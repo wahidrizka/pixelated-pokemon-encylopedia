@@ -14,7 +14,12 @@ import {
 
 import { colors } from "../../libs/utils";
 import * as T from "./index.style";
-import { getPokemons, getPokemonByName, getPokemonGeneration } from "../../api";
+import {
+  getPokemons,
+  getPokemonByName,
+  getPokemonGeneration,
+  searchPokemon,
+} from "../../api";
 
 import PokeAPI from "pokedex-promise-v2";
 const P = new PokeAPI();
@@ -28,6 +33,28 @@ const Explore = () => {
   const [pokemonSpecies, setPokemonSpecies] = useState([]);
   const [pokemonGeneration, setPokemonGeneration] = useState([]);
   const [pokemonModal, setPokemonModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    const requestPokemon = await searchPokemon(inputValue.toLowerCase());
+
+    if (requestPokemon) {
+      setPokemons([requestPokemon]);
+    } else {
+      console.log("error");
+    }
+    setLoading(false);
+    setInputValue(requestPokemon.name);
+  };
+
+  const handleClear = async () => {
+    setLoading(true);
+    loadPokemons();
+    setLoading(false);
+  };
 
   const pokemonsPerPage = 10;
 
@@ -126,6 +153,7 @@ const Explore = () => {
               <T.InfoStats>
                 {selectedPokemon.stats?.map((stats, index) => (
                   <Progress
+                    key={index}
                     statName={stats.stat.name
                       .replace("-", " ")
                       .replace("special", "sp")}
@@ -149,39 +177,48 @@ const Explore = () => {
             <Text variant="outlined" size="lg">
               POKÉMON ENCYCLOPEDIA
             </Text>
+
             <T.Pagination>
               <Button variant="dark" size="sm" onClick={leftClickHandler}>
                 ◀
               </Button>
+              <T.SearchPokemon onSubmit={handleSubmit}>
+                <input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  className="pxl-border"
+                  type="search"
+                  placeholder="Search Pokemon"
+                  onInput={handleClear}
+                />
+                <Button size="sm">Search</Button>
+              </T.SearchPokemon>
               <Button variant="dark" size="sm" onClick={rightClickHandler}>
                 ▶
               </Button>
             </T.Pagination>
             <T.Grid>
               {pokemons.map((pokemon) => (
-                <>
-                  <T.WrapperCardList key={pokemons.name}>
-                    <PokemonCard
-                      name={pokemon.name}
-                      // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                      sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
-                    >
-                      <T.TypeContainer>
-                        {pokemon.types.map((type, index) => (
-                          <TypeBadge key={index} type={type.type.name} />
-                        ))}
-                      </T.TypeContainer>
-                      <InfoButton
-                        key={pokemon.order}
-                        onClick={() => {
-                          setSelectedPokemon(pokemon);
-                          setPokemonModal(true);
-                          getPokemonSpecies(pokemon.name);
-                        }}
-                      />
-                    </PokemonCard>
-                  </T.WrapperCardList>
-                </>
+                <PokemonCard
+                  key={pokemon.order}
+                  name={pokemon.name}
+                  // sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                  sprite={`https://img.pokemondb.net/sprites/go/normal/${pokemon.name}.png`}
+                >
+                  <T.TypeContainer>
+                    {pokemon.types.map((type, index) => (
+                      <TypeBadge key={index} type={type.type.name} />
+                    ))}
+                  </T.TypeContainer>
+                  <InfoButton
+                    key={pokemon.order}
+                    onClick={() => {
+                      setSelectedPokemon(pokemon);
+                      setPokemonModal(true);
+                      getPokemonSpecies(pokemon.name);
+                    }}
+                  />
+                </PokemonCard>
               ))}
             </T.Grid>
           </T.Container>

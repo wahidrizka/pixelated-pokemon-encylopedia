@@ -10,7 +10,7 @@ const getPokemonByName = async (pokemonData, pokemonName) => {
     });
     results = await Promise.all(promises);
   } else {
-    results = P.getPokemonByName(pokemonName);
+    results = await P.getPokemonByName(pokemonName);
   }
 
   return results;

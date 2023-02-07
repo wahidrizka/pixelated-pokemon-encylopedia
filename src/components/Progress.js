@@ -19,7 +19,7 @@ const PixelatedProgress = styled("div")(({ stats }) => {
 const Progress = ({ stats, statName, baseStat }) => {
   return (
     <PixelatedProgress stats={stats} className="pxl-border">
-      <label for={statName}>{statName}</label>
+      <label htmlFor={statName}>{statName}</label>
       <progress id={statName} value={baseStat} max="200"></progress>
     </PixelatedProgress>
   );
