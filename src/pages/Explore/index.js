@@ -92,8 +92,6 @@ const Explore = () => {
         pokemonSpecies.generation?.name
       );
       setPokemonGeneration(generation);
-
-      console.log(selectedPokemon);
     } catch (error) {
       console.log(error);
     }
